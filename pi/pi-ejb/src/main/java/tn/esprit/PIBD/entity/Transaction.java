@@ -24,8 +24,6 @@ public class Transaction implements Serializable
 	int quantity_SB;
 	@Column(name="Average_price") 
 	float average_price;
-	
-	
 	@ManyToOne
 	Portfolio portfolio;
 	
