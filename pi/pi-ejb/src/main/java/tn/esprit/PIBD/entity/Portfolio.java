@@ -31,6 +31,7 @@ public class Portfolio implements Serializable
 	@Column(name="Current_price") 
 	float current_price;
 	
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="portfolio")
 	private Set<Transaction> transactions;
 	
