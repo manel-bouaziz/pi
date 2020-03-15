@@ -40,7 +40,11 @@
     </licenses>
 
     <dependencies>
-
+ <dependency> 
+        <groupId>javax</groupId> 
+        <artifactId>javaee-api</artifactId>
+         <version>7.0</version>
+          </dependency> 
         <!-- Depend on the ejb module and war so that we can package them -->
         <dependency>
             <groupId>tn.esprit</groupId>

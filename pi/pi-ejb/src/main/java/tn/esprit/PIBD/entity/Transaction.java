@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 @Entity 
 public class Transaction implements Serializable
 {
@@ -23,6 +24,9 @@ public class Transaction implements Serializable
 	int quantity_SB;
 	@Column(name="Average_price") 
 	float average_price;
+	
+	@ManyToOne
+	Portfolio portfolio;
 	
 	public Transaction() {}
 	public Date getDate() {return date;} 

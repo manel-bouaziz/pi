@@ -1,12 +1,15 @@
 package tn.esprit.PIBD.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity 
 public class Portfolio implements Serializable
@@ -27,6 +30,9 @@ public class Portfolio implements Serializable
 	float last_price;
 	@Column(name="Current_price") 
 	float current_price;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="portfolio")
+	private Set<Transaction> transactions;
 	
 	public Portfolio() {}
 	public String getType() {return type;} 
