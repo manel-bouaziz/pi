@@ -2,12 +2,15 @@ package tn.esprit.PIBD.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 @Entity 
 public class Client implements Serializable
 {
@@ -25,6 +28,10 @@ public class Client implements Serializable
 	int account_number;
 	@Column(name="Account_type") 
 	String account_type;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="client")
+	private Set<Ordre> ordres;
+	
 	public Client() {}
 	public String getName() {return name;} 
 	public void setName(String name) {this.name = name;}
