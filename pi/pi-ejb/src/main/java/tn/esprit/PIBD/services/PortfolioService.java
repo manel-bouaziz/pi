@@ -1,6 +1,7 @@
 package tn.esprit.PIBD.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.*;
@@ -53,16 +54,10 @@ public class PortfolioService implements PortfolioServiceRemote {
 		return em.find(Portfolio.class, id);
 	}
 
-	// Update quantity_SB
+	// Modification de la quantités d'actions
 	public void modifierQuantity_SB(String NewQuantity_SB, int portfolio_ID) {
 		Portfolio portfolio = em.find(Portfolio.class, portfolio_ID);
 		portfolio.setType(NewQuantity_SB);
-	}
-
-	// UpdateLetype
-	public void modifierType(String NewType, int portfolio_ID) {
-		Portfolio portfolio = em.find(Portfolio.class, portfolio_ID);
-		portfolio.setType(NewType);
 	}
 
 	public String updatePortfolio(Portfolio portfolio) {
@@ -89,7 +84,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 	}
 
 	// modifier le portefeuille
-	public void modifierportefeuille(String newType, String newCode_SB, int newQuantity_SB, float newCMB,
+	public void ModifierPortfolio(String newType, String newCode_SB, int newQuantity_SB, float newCMB,
 			float newLast_price, float newCurrent_price, int portfolioId, float newsolde, float newmontant,
 			float newRendement) {
 		Portfolio portfolio = em.find(Portfolio.class, portfolioId);
@@ -115,6 +110,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 		}
 	}
 
+	// c'est comme toString
 	public String getinfoPortfolioById(int portfolioId) {
 		Portfolio portfolio = em.find(Portfolio.class, portfolioId);
 		String potefeuille = "le portfolioId dont l'id est" + portfolio.getId() + "  " + "est" + "  " + "  "
@@ -124,11 +120,10 @@ public class PortfolioService implements PortfolioServiceRemote {
 		return potefeuille;
 	}
 
-	public void affectation(int portfolioid, int clientid) {
+	public void AffectationClientPortefeuille(int portfolioid, int clientid) {
 
 		Client ClientManagedEntity = em.find(Client.class, clientid);
 		Portfolio PortfolioManagedEntity = em.find(Portfolio.class, portfolioid);
-
 		PortfolioManagedEntity.setClient(ClientManagedEntity);
 		System.out.println("Affecté !!");
 	}
@@ -141,6 +136,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 
 	}
 
+	// je dois la revoir
 	public List<String> getCodeOptionByClientId(int clientId) {
 		Client clientManagedEntity = em.find(Client.class, clientId);
 		List<String> code = new ArrayList<>();
@@ -151,9 +147,9 @@ public class PortfolioService implements PortfolioServiceRemote {
 
 		return code;
 	}
-	/// PARITES FINANCE
+	/// PARITES FINANCE et métiers.
 
-	public void evolutiondeloption(int portfolioId) {
+	public void EvolutionOption(int portfolioId) {
 		Portfolio portfolio = em.find(Portfolio.class, portfolioId);
 
 		if (portfolio.getSolde() > 0) {
@@ -163,24 +159,26 @@ public class PortfolioService implements PortfolioServiceRemote {
 		}
 
 	}
+	// pvalue est plus bas
 
-	public void getplusHautOptionPrix() {
+	public void getMaxValue() {
 
 		Query query1 = em.createQuery("Select MAX(e.solde) from Portfolio e");
 		float result = (float) query1.getSingleResult();
 		System.out.println("Max solde  :" + result);
-		Portfolio portfolio = em.find(Portfolio.class, result);
+		// Portfolio portfolio = em.find(Portfolio.class, result);
 
 	}
+	// pvalue est plus bas
 
-	public void getplusbasOptionPrix() {
+	public void getMinValue() {
 		Query query1 = em.createQuery("Select MIN(e.solde) from Portfolio e");
 		float result = (float) query1.getSingleResult();
 		System.out.println("Max solde  :" + result);
 
 	}
 
-	public void PORTFOLIODANSSOLDENTRE() {
+	public void ValueInBetween() {
 		Query query = em.createQuery("Select e " + "from Portfolio e " + "where e.solde " + "Between 190 and 200");
 
 		List<Portfolio> list = (List<Portfolio>) query.getResultList();
@@ -191,7 +189,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 		}
 	}
 
-	public void LordredesmeilleuresAchatn() {
+	public void OrdreSelonBestValue() {
 		Query query = em.createQuery("Select e " + "from Portfolio e " + "ORDER BY e.solde ASC");
 		List<Portfolio> list = (List<Portfolio>) query.getResultList();
 
@@ -200,12 +198,14 @@ public class PortfolioService implements PortfolioServiceRemote {
 			System.out.println("\t Portfolio Solde :" + e.getCode_SB());
 		}
 	}
+	// l'option dans le pvalue est plus haut
 
 	public Portfolio getMeilleurOption(int clientId) {
-		// TODO Auto-generated method stub
+		List<Portfolio> liste = getPortfolioByClientId(clientId);
 		return getPortfolioByClientId(clientId).get(0);
 	}
 
+//l'option dans le pvalue est plus bas
 	public Portfolio getPireOption(int clientId) {
 		List<Portfolio> liste = getPortfolioByClientId(clientId);
 		return liste.get(liste.size() - 1);
@@ -229,6 +229,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 
 	}
 
+// le rendement du portefeuille se fait le rendement de chaque actions * sa quantité sur la quantité globale 
 	public float CalculRendementPortefeuilleParclient(int clientId) {
 
 		List<Portfolio> liste = getPortfolioByClientId(clientId);
@@ -244,6 +245,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 
 	}
 
+// le solde est le pvalue que le client a soit gagner soit perdu en achetant cette actions.
 	public void ModificationSoldeCalculdeRendementDActionEtMontant(int portfolioId) {
 		Portfolio portfolio = em.find(Portfolio.class, portfolioId);
 		float A = (portfolio.getCurrent_price() - portfolio.getCMB()) * (portfolio.getQuantity_SB());
@@ -262,12 +264,6 @@ public class PortfolioService implements PortfolioServiceRemote {
 
 	}
 
-	@Override
-	public List<Portfolio> getAllPortfolioByClient(Client client) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public Double volatilitéduportefeuilleclient(int clientid) {
 
 		Query q = em.createQuery("select AVG(volatilité) from Portfolio   WHERE client.id = :clientid");
@@ -275,8 +271,9 @@ public class PortfolioService implements PortfolioServiceRemote {
 		return (Double) q.getSingleResult();
 	}
 
+// on distingue le protefeuille optimal entre deux clients par la comparaison de leur ratio de sharpe avec taux sans rique donnée rendement deja calculer et  volatilité 
 	@Override
-	public String portfeuilleOptimale(int clientid, int clientId, float taux, float taux1) {
+	public String PortfeuilleOptimale(int clientid, int clientId, float taux, float taux1) {
 		// TODO Auto-generated method stub
 		float a = (float) ((CalculRendementPortefeuilleParclient(clientid) - taux)
 				/ volatilitéduportefeuilleclient(clientid));
@@ -287,9 +284,10 @@ public class PortfolioService implements PortfolioServiceRemote {
 					+ "  " + clientId;
 		}
 		return "Selon le calcul du ration de sharpe le client client dont l'id est" + "  " + clientid;
-	}
+	} // A l'aide d'un fichier excel le client peut consulter dans le portefeuille les
+		// 5 Entreprises qui occupent le 1er classement sur l'echelle national
 
-	public void entreprisedeHausse() throws FileNotFoundException {
+	public void EntrepriseDeHausse() throws FileNotFoundException {
 		String Path = "C:\\Hausse.csv";
 		File file = new File(Path);
 
@@ -297,7 +295,7 @@ public class PortfolioService implements PortfolioServiceRemote {
 		ArrayList<String> List = new ArrayList<String>();
 		String name = "";
 		Scanner in = new Scanner(file);
-		System.out.println("Date");
+		System.out.println(LocalDateTime.now());
 		while (in.hasNext()) {
 			String line = in.nextLine();
 			HausseArrayList.add(line);
@@ -313,4 +311,32 @@ public class PortfolioService implements PortfolioServiceRemote {
 		}
 
 	}
+
+	// A l'aide d'un fichier excel le client peut consulter dans le portefeuille les
+	// 5 Entreprises qui occupent le dernierer classement sur l'echelle national
+	public void EntrepriseDeBaisses() throws FileNotFoundException {
+		String Path = "C:\\Baisse.csv";
+		File file = new File(Path);
+
+		ArrayList<String> HausseArrayList = new ArrayList<String>();
+		ArrayList<String> List = new ArrayList<String>();
+		String name = "";
+		Scanner in = new Scanner(file);
+		System.out.println(LocalDateTime.now());
+		while (in.hasNext()) {
+			String line = in.nextLine();
+			HausseArrayList.add(line);
+			for (int i = 0; i < HausseArrayList.size(); i++) {
+				name = HausseArrayList.get(i);
+
+			}
+
+			String mots[] = name.split(";");
+			System.out.println(mots[0] + " " + "est une entreprise qui a marquer une Baisse avec" + " " + mots[1]
+					+ "est une variance de " + " " + mots[2]);
+
+		}
+
+	}
+
 }

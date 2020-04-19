@@ -24,23 +24,20 @@ public class ClientService implements ClientServiceRemote {
 	@PersistenceContext(unitName = "pi-ejb")
 	private EntityManager em;
 
-	// private ReclamationService recService;
-
 	public ClientService() {
 	}
 
 	// Create
 	public int ajouterClient(Client client) {
-		System.out.println("testt");
 		em.persist(client);
 		return client.getId();
-	}// tekhdem
+	}
 
 	// Delete
 	public void supprimerClientById(int id) {
 		Client client = em.find(Client.class, id);
 		supprimerClient(client);
-	}// tekhdem
+	}
 
 	public void supprimerClient(Client client) {
 		em.remove(client);
@@ -156,10 +153,3 @@ public class ClientService implements ClientServiceRemote {
 		}
 	}
 }
-
-
-	
-
-	
-
-

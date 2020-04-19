@@ -31,11 +31,9 @@ public class ReclamationService implements ReclamationServiceRemote {
 	}
 
 	public int ajouterReclamation(Reclamation reclamation) {
-		System.out.println("testt");
 		em.persist(reclamation);
 		return reclamation.getId_reclamation();
-	}// tekhdem
-		// Delete
+	}
 
 	public void supprimerReclamationById(int id) {
 		Reclamation reclamation = em.find(Reclamation.class, id);
@@ -47,7 +45,7 @@ public class ReclamationService implements ReclamationServiceRemote {
 
 	}
 
-	public TypedQuery<Reclamation> reccuperertouslesremarques() {
+	public TypedQuery<Reclamation> ReccuperationDesRemarques() {
 		TypedQuery<Reclamation> q1 = em.createQuery("select e from Reclamation e", Reclamation.class);
 		return q1;
 	}
@@ -58,13 +56,13 @@ public class ReclamationService implements ReclamationServiceRemote {
 	}
 
 	// Update
-	public void modifierReclamationClient(String newDescription, int id_Reclamation) {
+	public void ModifierReclamation(String newDescription, int id_Reclamation) {
 		Reclamation reclamation = em.find(Reclamation.class, id_Reclamation);
 		reclamation.setDescription(newDescription);
 
 	}
 
-	public void updateReclamation(Reclamation reclamation) {
+	public void UpdateReclamation(Reclamation reclamation) {
 		Reclamation emp = em.find(Reclamation.class, reclamation.getId_reclamation());
 		emp.setDescription(reclamation.getDescription());
 
@@ -82,7 +80,7 @@ public class ReclamationService implements ReclamationServiceRemote {
 		return lareclamation;
 	}
 
-	public void deleteAllReclamationJPQL() {
+	public void DeleteAllReclamationJPQL() {
 		int modified = em.createQuery("delete from Reclamation").executeUpdate();
 		if (modified > 1) {
 			System.out.println("successfully deleted");
@@ -102,7 +100,7 @@ public class ReclamationService implements ReclamationServiceRemote {
 		return ReclamationDescription;
 	}
 
-	public void affectationReclamationAuclient(int reclamationId, int clientid) {
+	public void AffectationReclamationclient(int reclamationId, int clientid) {
 
 		Client ClientManagedEntity = em.find(Client.class, clientid);
 		Reclamation ReclamationManagedEntity = em.find(Reclamation.class, reclamationId);
@@ -147,7 +145,7 @@ public class ReclamationService implements ReclamationServiceRemote {
 		return reclamation.getDescription();
 	}
 
-	public String detectiondInsulte(int idrem) throws FileNotFoundException, EJBTransactionRolledbackException {
+	public String StopWords(int idrem) throws FileNotFoundException, EJBTransactionRolledbackException {
 
 		String nomdufichier = "C:\\test.txt";
 		File file = new File(nomdufichier);
@@ -159,14 +157,10 @@ public class ReclamationService implements ReclamationServiceRemote {
 			String line = in.nextLine();
 			WordArrayList.add(line);
 		}
-		// System.out.println( WordArrayList);
-		// System.out.println(l);
 
 		for (int i = 0; i < WordArrayList.size(); i++) {
 			// System.out.println(WordArrayList.get(i));
 			if (WordArrayList.get(i) != l) {
-				// reclamationserviceremote.supprimerReclamationById(idrem);
-				System.out.println("okk");
 				txt = " Suppression imediate de votre reclamaiton";
 
 			}
