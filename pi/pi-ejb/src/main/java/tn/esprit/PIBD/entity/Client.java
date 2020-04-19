@@ -41,7 +41,6 @@ public class Client implements Serializable
 	}
 	@Column(name="Login") 
 	String login;
-	//ceci est un commentaire
 	@Column(name="Password") 
 	String password;
 	@Column(name="Account_number") 
