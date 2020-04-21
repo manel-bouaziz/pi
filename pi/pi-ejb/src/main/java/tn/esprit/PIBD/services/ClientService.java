@@ -2,7 +2,6 @@ package tn.esprit.PIBD.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +15,8 @@ import tn.esprit.PIBD.entity.Client;
 import tn.esprit.PIBD.entity.Portfolio;
 import tn.esprit.PIBD.entity.Reclamation;
 import tn.esprit.PIBD.interfaces.ClientServiceRemote;
-
+import javax.ejb.*;
+import javax.ws.rs.*;
 @Stateless
 @LocalBean
 public class ClientService implements ClientServiceRemote {

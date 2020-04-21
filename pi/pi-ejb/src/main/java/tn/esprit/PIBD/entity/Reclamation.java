@@ -34,6 +34,15 @@ public class Reclamation implements Serializable {
 	@ManyToOne
 	Client client;
 
+	public Reclamation(int id_reclamation, LocalDateTime date_achat, String description, String etat, Client client) {
+		super();
+		this.id_reclamation = id_reclamation;
+		this.date_achat = date_achat;
+		this.description = description;
+		this.etat = etat;
+		this.client = client;
+	}
+
 	public Reclamation() {
 
 	}

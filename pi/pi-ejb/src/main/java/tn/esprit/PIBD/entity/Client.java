@@ -19,7 +19,6 @@ import javax.persistence.Table;
 import tn.esprit.*;
 
 @Table(name = "Client")
-
 @Entity
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -44,6 +43,21 @@ public class Client implements Serializable {
 	float interet;
 	@Column(name = "Investissement")
 	float invest;
+
+	
+	public Client(int id, String name, String login, String password, String proxy, int account_number,
+			String account_type, float interet, float invest) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.login = login;
+		this.password = password;
+		this.proxy = proxy;
+		this.account_number = account_number;
+		this.account_type = account_type;
+		this.interet = interet;
+		this.invest = invest;
+	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
 	private Set<Ordre> ordres;
