@@ -1,11 +1,13 @@
 package tn.esprit.PIBD.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +32,8 @@ public class Portfolio implements Serializable
 	float last_price;
 	@Column(name="Current_price") 
 	float current_price;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="portfolio")
-	private Set<Transaction> transactions;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="portfolio",fetch=FetchType.EAGER)
+	private List<Transaction> transactions;
 	
 	public Portfolio() {}
 	public String getType() {return type;} 
@@ -46,7 +48,22 @@ public class Portfolio implements Serializable
 	public void setLast_price(float last_price) {this.last_price = last_price;}
 	public float getCurrent_price() {return current_price;}
 	public void setCurrent_price(float current_price) {this.current_price = current_price;}
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+	public void addTransactions(Transaction transaction ) {
+		transaction.setPortfolio(this);
+		this.transactions.add(transaction);
+	}
 	
 
 }

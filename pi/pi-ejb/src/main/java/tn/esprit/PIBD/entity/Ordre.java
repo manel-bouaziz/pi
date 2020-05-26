@@ -1,7 +1,8 @@
 package tn.esprit.PIBD.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+//import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Ordre implements Serializable
 	int id;
 
 	@Column(name="Order_Date") 
-	Date date;
+	LocalDateTime date;
 	
 	@Column(name="Choice_company") 
 	String choice_company;
@@ -43,19 +44,15 @@ public class Ordre implements Serializable
 	
 	@Column(name="Risk") 
 	int risk;
-	
-	@Column(name="Comission") 
-	int comission;
-	
 	@ManyToOne
 	Client client;
 	
 	public Ordre() {}
 	
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	
@@ -89,18 +86,30 @@ public class Ordre implements Serializable
 	public void setRisk(int risk) {
 		this.risk = risk;
 	}
-	public int getComission() {
-		return comission;
-	}
-	public void setComission(int comission) {
-		this.comission = comission;
-	}
+	
 	public String getChoice_company() {
 		return choice_company;
 	}
 	public void setChoice_company(String choice_company) {
 		this.choice_company = choice_company;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	
 
 }

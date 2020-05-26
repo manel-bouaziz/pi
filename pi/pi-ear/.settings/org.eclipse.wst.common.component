@@ -17,5 +17,8 @@
         <dependent-module archiveName="pi-ejb.jar" deploy-path="/" handle="module:/resource/pi-ejb/pi-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="jboss-seam-mail.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/seam/jboss-seam-mail/2.1.2.GA/jboss-seam-mail-2.1.2.GA.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
